@@ -1,0 +1,98 @@
+{
+ "ad": "MARKA_ADI",
+ "hesap": "@hesap",
+ "kaynak": "markalar/<marka>/marka_kimligi.md",
+ "renkler": {
+  "panel": "#1E1E1E",
+  "vurgu": "#FFD21F",
+  "kart_metin": "#FFFFFF",
+  "altyazi": "#FFFFFF",
+  "golge": "#000000",
+  "vurgu_metin": "#FFD21F",
+  "cizgi": "#FFD21F"
+ },
+ "altyazi": {
+  "font": "Manrope-ExtraBold",
+  "boyut": 70,
+  "kontur": 2,
+  "golge_kontur": 9,
+  "golge_bulaniklik": 9,
+  "golge_opaklik": 230,
+  "max_genislik": 700
+ },
+ "panel": {
+  "opaklik": 228,
+  "kose": 16,
+  "cerceve": 2,
+  "cerceve_opaklik": 140,
+  "degrade": null,
+  "cift_cerceve": false,
+  "ic_bosluk": 8
+ },
+ "kart": {
+  "eyebrow_font": "Manrope-Bold",
+  "eyebrow_boyut": 24,
+  "eyebrow_harf_araligi": 5,
+  "eyebrow_buyuk_harf": true,
+  "isaret": "elmas",
+  "cizgi_uzunluk": 56,
+  "madde_font": "Manrope-SemiBold",
+  "madde_boyut": 36,
+  "buyuk_font": "Manrope-Light",
+  "buyuk_boyut": 46,
+  "duzen": "sol",
+  "ayrac": "·",
+  "madde_renk": "kart_metin",
+  "madde_buyuk_bas": false
+ },
+ "rozet": {
+  "bicim": "hap",
+  "font": "Manrope-Bold",
+  "yukseklik": 78,
+  "cerceve": 3,
+  "harf_araligi": 4,
+  "opaklik": 232,
+  "kose": "hap",
+  "cerceve_opaklik": 255,
+  "isaret": "yok",
+  "metin": "kart_metin",
+  "dikey_oran": 0.68
+ },
+ "gecis": {
+  "isik": true,
+  "isik_gucu": 0.55
+ },
+ "dosyalar": {
+  "kapanis": null,
+  "logo_koyu_zemin": null,
+  "logo_acik_zemin": null
+ },
+ "_aciklama": {
+  "renkler": "panel: kart/rozet zemini; vurgu: eyebrow, isaret, cizgi, cerceve, vurgulu altyazi kelimesi, gecis isigi; kart_metin: kart ve rozet yazisi; altyazi: altyazi rengi; golge: altyazi golgesi ve konturu",
+  "fontlar": "fontlar/ klasorundeki dosya adi (uzantisiz). Markanin fontu ucretsizse (Google Fonts, OFL) indir ve statik agirliklara ayir; lisansliysa en yakin ucretsiz esdegeri sec ve marka_kimligi.md icine yaz",
+  "kart.isaret": "elmas | nokta | yok",
+  "rozet.bicim": "hap | elmas",
+  "gecis.isik": "true ise bolum gecisinde alttan vurgu renginde isik",
+  "dosyalar.kapanis": "yoksa null; varsa 1080x1920 30fps mp4",
+  "renkler.vurgu_metin": "vurgu renginde yazilar (eyebrow, vurgulu altyazi kelimesi, rozet yazisi); yoksa vurgu",
+  "renkler.cizgi": "cizgi ve cerceve rengi; yoksa vurgu",
+  "panel.degrade": "[ust, alt] dikey degrade ya da null (duz panel)",
+  "panel.cift_cerceve": "true ise ic_bosluk kadar iceride ikinci ince cerceve",
+  "kart.duzen": "sol (eyebrow solda, maddelerde isaret) | orta (story duzeni: ortali eyebrow + cizgi, maddeler ayracla tek satir)",
+  "kart.madde_renk": "kart_metin | vurgu",
+  "rozet.kose": "hap ya da piksel (or. 8)",
+  "rozet.metin": "kart_metin | vurgu",
+  "alinti": "alinti karti (tur: alinti) icin font ve tirnak ayarlari",
+  "kart.cizgi_uzunluk": "0 ise baslik altinda cizgi yok (kapak dahil)",
+  "kart.madde_buyuk_bas": "true ise kart maddeleri buyuk harfle baslar (Turkce: i -> I-noktali)",
+  "alinti.imza": "false ise alinti kartinda imza gosterilmez"
+ },
+ "alinti": {
+  "font": "Inter-Italic",
+  "boyut": 44,
+  "tirnak_font": "Inter-Bold",
+  "tirnak_boyut": 150,
+  "tirnak_opaklik": 90,
+  "imza": true
+ }
+}

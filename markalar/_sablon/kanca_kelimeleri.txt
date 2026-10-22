@@ -1,0 +1,1 @@
+# Markanın kavram kelimeleri (kanca puanlamasında "somutluk" sayılır). Her satıra bir kelime ya da kök.

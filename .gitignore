@@ -1,0 +1,25 @@
+# Python ortamı ve önbellek
+.venv/
+__pycache__/
+*.pyc
+
+# Kurulumda indirilen modeller (büyük dosyalar)
+modeller/*
+!modeller/BENI_OKU.txt
+
+# Kişisel videolar ve çıktılar
+Taked/*
+!Taked/BENI_OKU.txt
+Likes/*
+!Likes/BENI_OKU.txt
+Final/*
+!Final/BENI_OKU.txt
+calisma/*
+!calisma/_ornek/
+*.mp4
+*.mov
+*.MOV
+*.wav
+
+# Kişisel kurulum notu
+KURULUM.md

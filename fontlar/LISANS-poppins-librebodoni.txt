@@ -1,0 +1,2 @@
+Poppins (Indian Type Foundry) ve Libre Bodoni (Pablo Impallari, Rodrigo Fuenzalida) — SIL Open Font License 1.1.
+Kaynak: Google Fonts (npm @fontsource/poppins, @fontsource/libre-bodoni 5.3.0); latin + latin-ext alt kümeleri birleştirildi (Türkçe karakterler tam).

@@ -1,0 +1,14 @@
+numpy
+pillow
+scipy
+librosa
+soundfile
+matplotlib
+opencv-python-headless
+mediapipe
+faster-whisper
+av<16
+fonttools
+PyYAML
+truststore
+huggingface_hub
