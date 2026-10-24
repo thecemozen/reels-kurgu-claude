@@ -23,9 +23,10 @@ Ham videoyu verip "bunu kurgula" dediğinde Claude sırasıyla şunları yapar:
 | Çıktı | 2160x3840 (4K dikey) yüksek kaliteli MP4 |
 | Kapak | 12 aday kare sunulur, sen seçersin. Kapak 4K JPG, düzenlenebilir SVG ve profil ızgarası önizlemesi olarak gelir |
 | Açıklama | Marka diline uygun Instagram açıklaması yazılır ve yapay zekâ izlerine karşı kontrol edilir |
+| SRT altyazı | Türkçe SRT ve 9 dilde çevirisi (İngilizce, İspanyolca, Portekizce, Hintçe, Endonezce, Arapça, Fransızca, Almanca, Rusça); dosya adları Meta dil kodlarıyla |
 | Deneme Reels | İstersen aynı videonun farklı kancalı 3–4 sürümünü ve her birine ayrı açıklama hazırlar (Instagram'ın deneme Reels özelliği için) |
 
-Her video kendi klasörüne düzenli şekilde çıkar: `Final/<tarih>_<Kapak-Basligi>/`.
+Her video kendi klasörüne düzenli şekilde çıkar: `Final/<tarih>_<Kapak-Basligi>/` (video, açıklama, kapak, `altyazi/`).
 
 ## 2. Nasıl başlarım? (3 adım)
 
@@ -156,6 +157,7 @@ Ayrıntılar `.claude/skills/reels-kurgu/SKILL.md` içinde. Bu sistemi kuran ki�
 - Klasör ve dosya adı kapak başlığıdır: `Final/<YYYY-MM-DD>_<Baslik>/` (video, açıklama, `BILGI.md`, `kapak/`, `eski/`).
 - Kapak karesini kullanıcı seçer; her kapakla birlikte düzenlenebilir SVG verilir.
 - Açıklama ve kart metinleri teslimden önce `metin_kontrol.py` ile kontrol edilir. En fazla 5 etiket.
+- Her teslimde SRT altyazılar üretilir: `srt_yaz.py oner` ile cümle düzeyinde Türkçe bloklar, çeviriler, `srt_yaz.py yaz` ile denetim ve yazma. Çevirilerin ana dili o dil olan biri tarafından okunmadığını kullanıcıya söyle.
 - Müzik varsayılan olarak yok (telif riski); kullanıcı isterse eklenir.
 
 ---
@@ -195,5 +197,6 @@ Taked/  Likes/  Final/                   ham çekimler, referanslar, bitmiş vid
 | `kapak.py` | Kapak adayları; seçilen kareyle 4K JPG + SVG + ızgara önizlemesi |
 | `final.py` | Çıktı klasörü düzeni ve `BILGI.md` |
 | `metin_kontrol.py` | Açıklama ve kart metni kontrolü |
+| `srt_yaz.py` | SRT altyazı: Türkçe blok önerisi, çeviri denetimi ve çok dilli SRT dosyaları |
 | `marka_tara.py` | Marka dosyalarından renk ve font çıkarır |
 | `ritim_olc.py` | Referans videonun kesim ritmini ölçer |

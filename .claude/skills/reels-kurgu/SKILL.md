@@ -43,6 +43,7 @@ Kullanıcı kod bilmiyor ve terminal kullanmıyor. Bütün komutları sen çalı
 | `araclar/marka_tara.py <cikti> <kaynaklar..>` | Marka dosyalarından renk, font ve tasarım tablosu çıkarır |
 | `araclar/plan_arac.py` (içe aktarılır) | `Plan` sınıfı: `p.kelime("sabır")` kesik zamanı, `p.gecis_once("ama")` bölüm geçişi, `duzelt={zaman: "kelime"}` Whisper düzeltmesi, `p.kaydet(ogeler, gecisler, vurgu)` altyazıyla birlikte `plan.json` |
 | `araclar/kanca_bul.py calisma/<video> [--duzelt "46.42=da;..."] [--en 5]` | Videonun kendi konuşmasından kanca adaylarını bulur, `ig-reel`'in 5 ölçütüyle **Türkçe** puanlar (`kanca_adaylari.json`) |
+| `araclar/srt_yaz.py oner <calisma>` / `yaz <calisma> --final <Final/..> --ad <Baslik>` | SRT altyazı: son videonun kelimelerinden cümle düzeyinde Türkçe bloklar önerir (`altyazi_bloklar.json`); çeviriler eklenince bütün dilleri denetleyip `altyazi/` klasörüne yazar |
 | `araclar/metin_kontrol.py <dosya.txt> [--uygula]` | Açıklama/kart metni son kontrolü: `ig-human` temizliği (görünmez karakter, uzun tire) + Türkçe klişe, etiket ve emoji sayımı |
 | `araclar/cikti.py <klasor> <Final/..mp4> --ses temiz\|ham` | Görüntü, whoosh, kapanış, −14 LUFS ve son kodlama |
 | `araclar/kurgu_v1.py` | Eski v1 motoru (yalnızca eski videoları yeniden üretmek için) |
@@ -67,6 +68,7 @@ Final/<YYYY-MM-DD>_<Baslik>/
     <Baslik>_aciklama.txt     Instagram açıklaması
     BILGI.md                  teknik bilgiler + kontrol sonuçları (cikti.py otomatik yazar)
     kapak/                    seçilen kapaklar (.jpg + .svg + _izgara.jpg) ve aday tablosu
+    altyazi/                  <Baslik>.tr_TR.srt + çeviriler (<Baslik>.en_US.srt ...)
     eski/                     önceki sürümler (silinmez, buraya taşınır)
 ```
 
@@ -146,6 +148,24 @@ Instagram'ın deneme Reels özelliği için aynı videonun farklı kancalı sür
 - Gövde kurgusu ortaktır: `calisma/<video>/` içinde bir kez kesilir. Her sürüm `calisma/<video>-V1..Vn/` klasöründe aynı `kesimler.json`'a kendi `kanca` alanını ekler. Tek bir `plan_olustur.py <klasor>` hepsine uygulanır.
 - `kes.py`'yi **paralel çalıştırma**, sırayla çalıştır. Paralel 4K kodlamada dosya yarım kalabilir. Her `kesik.mp4`'ün süresini `ffprobe` ile kontrol et.
 - Her sürüme **ayrı açıklama** yaz; ilk cümlesi o sürümün kancasıyla aynı yönde olsun: `<Baslik>_V1_<Strateji>_aciklama.txt`. Hepsi tek klasörde: `Final/<tarih>_<Baslik>/<Baslik>_V1_<Strateji>.mp4`.
+- **Her sürüme ayrı SRT** (kanca açılışı farklı olduğu için zamanlar kayar): `srt_yaz.py oner calisma/<video>-V1`, dosya adı `<Baslik>_V1_<Strateji>`. Gövde çevirileri ortaktır; yalnızca kanca bloğu ve zamanlar değişir, önceki sürümün `altyazi_bloklar.json` çevirilerini kopyala.
+
+## SRT altyazı ve çeviriler
+
+Her videonun teslimine Türkçe SRT ve popüler dillerde çevirileri eklenir: `Final/<tarih>_<Baslik>/altyazi/`.
+- **Varsayılan diller:** tr + en, es, pt-BR, hi, id, ar, fr, de, ru (Instagram'ın büyük pazarları). Kullanıcı başka dil isterse `srt_yaz.py` içindeki `META` sözlüğünde kodu varsa eklenir.
+- **Dosya adı:** `<Baslik>.<dil_BOLGE>.srt` (Meta dil kodu: tr_TR, en_US, es_LA, pt_BR, hi_IN, id_ID, ar_AR, fr_FR, de_DE, ru_RU). Facebook / Meta Business Suite dili addan tanır.
+- **Adımlar:**
+  1. `srt_yaz.py oner calisma/<video>`: son videodaki kelimelerden (kanca dahil, kesimde atılanlar hariç, `plan_olustur.py` düzeltmeleriyle) Türkçe blok taslağı üretir.
+  2. Taslağı gözden geçir: blokları konuşmanın doğal duraklarına ve yan cümlelere göre düzelt. Altyazı konuşulduğu gibi kalır (videoya işlenen altyazıyla aynı kelimeler); noktalama ve büyük harf düzgün olur.
+  3. Her bloğa çevirileri ekle (`"en": "..."`, satır kırmak için `\n`). Blok cümle düzeyinde olduğu için her çeviri kendi söz dizimiyle o bloğa sığmalı.
+  4. `srt_yaz.py yaz ...`: eksik çeviri, 2 satır sınırı, satır uzunluğu (~42 kar.) ve okuma hızı (> 25 kar/sn uyarı) denetlenir. Uyarı varsa çeviriyi kısalt.
+- **Çeviri kuralları:**
+  - Terimleri bir videoda her dilde tutarlı kullan (ör. eşlik → accompanying / acompañar / Begleiten; işgal → invading / invadir / Vereinnahmen; tekâmül → spiritual growth).
+  - Bir kelimenin birebir karşılığı başka bir çağrışım taşıyorsa anlamı veren karşılığı seç (ör. işgal: Hintçe दख़ल, Endonezce mencampuri, Arapça التدخّل) ve kullanıcıya söyle.
+  - Marka terimleri ve özel kavramlar çoğu dilde aynen kalır.
+  - Çağrı cümlesi o dilin Instagram alışkanlığıyla çevrilir ("Kaydet ve birine gönder." → "Save this and send it to someone.").
+- **Kullanıcıya söyle:** Çeviriler ana dili o dil olan biri tarafından okunmadı; özellikle Arapça ve Hintçe yayından önce okutulmalı. Instagram uygulaması SRT yüklemeyi her hesapta sunmaz; Meta Business Suite üzerinden yüklenebilir.
 
 ## Metin doğruluğu
 
@@ -193,5 +213,6 @@ Instagram'ın deneme Reels özelliği için aynı videonun farklı kancalı sür
       4. Izgara önizlemesinde başlık ve logo tam görünmeli. Kullanıcı seçmeden kapağı kesinleştirme.
     - Açıklamayı marka diliyle `ig-caption` skill'iyle yaz: `Final/<tarih>_<Baslik>/<Baslik>_aciklama.txt`.
     - **`ig-human` kontrolü:** `metin_kontrol.py <aciklama>`; görünmez karakter/uzun tire varsa `--uygula`. Klişe çıkarsa elle yeniden yaz. Kart başlık ve maddelerini de geçici bir dosyaya yazıp aynı kontrolden geçir. Not: `ig-human`'ın `detect.py` puanı İngilizceye göredir, Türkçede kullanılmaz.
+    - **SRT altyazılar:** `srt_yaz.py oner` → blokları gözden geçir → çevirileri ekle → `srt_yaz.py yaz` (0 hata, uyarılar giderilmiş). Ayrıntı: "SRT altyazı ve çeviriler".
     - En sonda `final.py bilgi` ile `BILGI.md` dosyasını güncelle ve kullanıcıya klasörün yolunu ver.
     - Dosya yolunu ver.

@@ -172,6 +172,26 @@ class Plan:
                         "vurgu": [w for w in satir.split() if tr_kucuk(w) in vurgu]})
         return out
 
+    def son_kelimeler(self):
+        """Son videoda duyulan kelimeler, sırasıyla: [(bas, son, kelime)] (kesik video zamanı).
+        Kanca varsa önce kanca kelimeleri gelir; kesimde atılan kelimeler (hiçbir parçaya düşmeyen) çıkarılır.
+        srt_yaz.py bunu kullanır."""
+        def parcada(w):
+            # Whisper kelime başını önceki sessizliğe kaydırabilir: kelimenin bir kısmı parçadaysa duyulur
+            ortak = max((min(w["son"], kare(p["son"])) - max(w["bas"], kare(p["bas"])) for p in self.kes), default=0)
+            return ortak >= min(0.08, 0.4 * (w["son"] - w["bas"]))
+        out = []
+        if self.kanca:
+            kb, ke = kare(self.kanca["bas"]), kare(self.kanca["son"])
+            for w in self.kelimeler:
+                if kb - 0.05 <= (w["bas"] + w["son"]) / 2 <= ke + 0.05:
+                    out.append((round(max(w["bas"] - kb, 0.0), 3), round(min(w["son"] - kb, self.ofset), 3),
+                                w["kelime"].strip()))
+        for w in self.kelimeler:
+            if parcada(w):
+                out.append((self.k(w["bas"]), self.k(w["son"]), w["kelime"].strip()))
+        return out
+
     def _onceki(self, w):
         i = self.kelimeler.index(w)
         return self.kelimeler[i - 1] if i else None
